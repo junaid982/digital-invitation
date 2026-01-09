@@ -1,112 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D Love AR Card</title>
+  <title>Markerless 3D Love AR</title>
 
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
   <style>
     body { margin: 0; overflow: hidden; }
+    #hint {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-family: sans-serif;
+      z-index: 10;
+    }
   </style>
 </head>
 
 <body>
 
+<div id="hint">📱 Move phone → Tap on floor to place AR card</div>
+
 <a-scene
-  embedded
-  arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: false;"
   renderer="logarithmicDepthBuffer: true;"
+  xr-mode-ui="enabled: true"
+  webxr="optionalFeatures: hit-test, local-floor;"
 >
 
   <!-- Camera -->
-  <a-camera position="0 0 0"></a-camera>
+  <a-camera></a-camera>
 
-  <!-- ================= MARKER ================= -->
-  <a-marker preset="hiro">
+  <!-- Light -->
+  <a-entity light="type: ambient; intensity: 1.2"></a-entity>
+  <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
 
-    <!-- WHOLE CARD AS ONE 3D OBJECT -->
-    <a-entity position="0 0 0" rotation="-20 0 0">
+  <!-- Hit test cursor -->
+  <a-entity
+    id="cursor"
+    raycaster="objects: .hit"
+    cursor="fuse: false">
+  </a-entity>
 
-      <!-- Couple Image -->
+  <!-- ================= AR CONTENT ================= -->
+  <a-entity id="arContent" visible="false">
+
+    <!-- FLOATING GROUP -->
+    <a-entity
+      animation="property: position; dir: alternate; dur: 3000; easing: easeInOutSine; loop: true; to: 0 0.1 0">
+
+      <!-- COUPLE IMAGE (POP-OUT) -->
       <a-plane
         src="junaid_shaziya.png"
         position="0 1.8 0"
         width="1.3"
         height="1.5"
-        material="shader: flat; transparent: true;">
+        material="shader: flat; transparent: true;"
+        animation="property: scale; from: 1 1 1; to: 1.05 1.05 1.05; dir: alternate; dur: 2500; loop: true">
       </a-plane>
 
-      <!-- Names -->
-      <a-entity position="0 1.15 0.05">
-        <a-image src="static/heart.png" position="-1 0 0" scale="0.25 0.25 0.25"></a-image>
-        <a-text
-          value="Junaid & Shaziya"
-          align="center"
-          color="#FF4D6D"
-          scale="0.8 0.8 0.8">
-        </a-text>
-        <a-image src="static/heart.png" position="1 0 0" scale="0.25 0.25 0.25"></a-image>
-      </a-entity>
+      <!-- 3D HEART -->
+      <a-sphere
+        position="-0.9 1.6 0.1"
+        radius="0.08"
+        color="#FF4D6D"
+        animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
+      </a-sphere>
 
-      <!-- Shayari Line 1 -->
-      <a-entity position="0 0.8 0.1">
-        <a-image src="static/star.png" position="-1 0 0" scale="0.18 0.18 0.18"></a-image>
-        <a-text
-          value="Tum meri har dua ka woh hissa ho"
-          align="center"
-          color="#FFFFFF"
-          scale="0.55 0.55 0.55">
-        </a-text>
-        <a-image src="static/star.png" position="1 0 0" scale="0.18 0.18 0.18"></a-image>
-      </a-entity>
+      <a-sphere
+        position="0.9 1.6 0.1"
+        radius="0.08"
+        color="#FF4D6D"
+        animation="property: rotation; to: 0 -360 0; dur: 4000; loop: true">
+      </a-sphere>
 
-      <!-- Shayari Line 2 -->
-      <a-entity position="0 0.55 0.15">
-        <a-image src="static/heart.png" position="-1 0 0" scale="0.18 0.18 0.18"></a-image>
-        <a-text
-          value="Jiske bina meri zindagi adhoori ho"
-          align="center"
-          color="#FFFFFF"
-          scale="0.55 0.55 0.55">
-        </a-text>
-        <a-image src="static/heart.png" position="1 0 0" scale="0.18 0.18 0.18"></a-image>
-      </a-entity>
+      <!-- 3D RING -->
+      <a-torus
+        position="0 0.4 0.2"
+        radius="0.18"
+        radius-tubular="0.015"
+        color="#FFD700"
+        animation="property: rotation; to: 360 360 0; dur: 6000; loop: true">
+      </a-torus>
 
-      <!-- Shayari Line 3 -->
-      <a-entity position="0 0.3 0.2">
-        <a-image src="static/red-rose.png" position="-1.1 0 0" scale="0.18 0.18 0.18"></a-image>
-        <a-text
-          value="Haath thaam kar chalna hai umr bhar"
-          align="center"
-          color="#FFFFFF"
-          scale="0.55 0.55 0.55">
-        </a-text>
-        <a-image src="static/red-rose.png" position="1.1 0 0" scale="0.18 0.18 0.18"></a-image>
-      </a-entity>
-
-      <!-- Footer -->
+      <!-- TEXT -->
       <a-text
-        value="Forever Together"
-        position="0 -0.05 0.25"
+        value="Junaid & Shaziya"
+        position="0 1.1 0.1"
         align="center"
-        color="#FFD1DC"
-        scale="0.6 0.6 0.6">
+        color="#FF4D6D"
+        scale="0.8 0.8 0.8">
       </a-text>
 
       <a-text
-        value="With Love"
-        position="0 -0.25 0.3"
+        value="Tum meri har dua ka woh hissa ho"
+        position="0 0.8 0.15"
+        align="center"
+        color="#FFFFFF"
+        scale="0.55 0.55 0.55">
+      </a-text>
+
+      <a-text
+        value="Haath thaam kar chalna hai umr bhar"
+        position="0 0.55 0.2"
+        align="center"
+        color="#FFFFFF"
+        scale="0.55 0.55 0.55">
+      </a-text>
+
+      <a-text
+        value="Forever Together"
+        position="0 0.25 0.25"
         align="center"
         color="#FFD1DC"
         scale="0.6 0.6 0.6">
       </a-text>
 
     </a-entity>
+  </a-entity>
 
-  </a-marker>
+  <!-- Tap Surface -->
+  <a-plane
+    class="hit"
+    position="0 0 0"
+    rotation="-90 0 0"
+    width="50"
+    height="50"
+    visible="false">
+  </a-plane>
 
 </a-scene>
+
+<!-- ================= MUSIC ================= -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+  const scene = document.querySelector("a-scene");
+  const content = document.querySelector("#arContent");
+  const music = document.querySelector("#bgMusic");
+
+  scene.addEventListener("click", () => {
+    if (!content.visible) {
+      content.visible = true;
+      music.play().catch(()=>{});
+      document.getElementById("hint").innerText = "❤️ Move around to feel depth";
+    }
+  });
+</script>
 
 </body>
 </html>
