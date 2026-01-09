@@ -23,16 +23,25 @@
     <!-- Camera -->
     <a-camera></a-camera>
 
-    <!-- Couple Image (FARTHER) -->
+    <!-- ===================================================== -->
+    <!-- PNG IMAGE WITH TRANSPARENCY FIX                       -->
+    <!-- transparent: true → enables PNG alpha channel         -->
+    <!-- alphaTest: 0.5 → removes black background             -->
+    <!-- ===================================================== -->
     <a-image
       src="couple.png"
       position="0 2.1 -3.5"
-      scale="1 1 1">
+      scale="1 1 1"
+      material="transparent: true; alphaTest: 0.5;">
     </a-image>
 
-    <!-- Wedding Details (FARTHER & COMFORTABLE) -->
+    <!-- Wedding Details -->
     <a-text
-      value="💍 Junaid ❤️ Bride\n📅 15 Feb 2026\n📍 Wedding Hall, Hyderabad\n📞 Groom: 9999999999\n📞 Bride: 8888888888"
+      value="💍 Junaid ❤️ Bride
+📅 15 Feb 2026
+📍 Wedding Hall, Hyderabad
+📞 Groom: 9999999999
+📞 Bride: 8888888888"
       position="0 1.2 -3.5"
       scale="0.7 0.7 0.7"
       align="center"
