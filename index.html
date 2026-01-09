@@ -18,36 +18,57 @@
 </head>
 
 <body>
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
 
-    <!-- Camera -->
-    <a-camera></a-camera>
+<!-- ===================== ADJUST HERE ===================== -->
 
-    <!-- ===================================================== -->
-    <!-- PNG IMAGE WITH TRANSPARENCY FIX                       -->
-    <!-- transparent: true → enables PNG alpha channel         -->
-    <!-- alphaTest: 0.5 → removes black background             -->
-    <!-- ===================================================== -->
-    <a-image
-      src="couple.jpg"
-      position="0 2.1 -3.5"
-      scale="1 1 1"
-      material="transparent: true; alphaTest: 0.5;">
-    </a-image>
+<script>
+  /* DISTANCE FROM CAMERA (Z axis) */
+  const IMAGE_Z = -3.5;     // More far → -4 , closer → -3
+  const TEXT_Z  = -3.5;
 
-    <!-- Wedding Details -->
-    <a-text
-      value="💍 Junaid ❤️ Bride
+  /* IMAGE SIZE */
+  const IMAGE_WIDTH  = 1.4;
+  const IMAGE_HEIGHT = 1.4;
+
+  /* TEXT SIZE */
+  const TEXT_SCALE = 0.7;
+
+  /* TEXT POSITION */
+  const TEXT_Y = 1.2;   // Up / down
+  const TEXT_X = 0;     // Left / right
+</script>
+
+<!-- ====================================================== -->
+
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+
+  <!-- Camera -->
+  <a-camera></a-camera>
+
+  <!-- ================= IMAGE (PNG / JPG SAFE) ================= -->
+  <!-- a-plane is more stable than a-image in WebAR -->
+  <a-plane
+    src="couple.png"
+    position="0 2.1 -3.5"
+    width="1.4"
+    height="1.4"
+    material="shader: flat; transparent: true; depthWrite: false;">
+  </a-plane>
+
+  <!-- ================= WEDDING TEXT ================= -->
+  <a-text
+    value="💍 Junaid ❤️ Bride
 📅 15 Feb 2026
 📍 Wedding Hall, Hyderabad
 📞 Groom: 9999999999
 📞 Bride: 8888888888"
-      position="0 1.2 -3.5"
-      scale="0.7 0.7 0.7"
-      align="center"
-      color="#FF1493">
-    </a-text>
+    position="0 1.2 -3.5"
+    scale="0.7 0.7 0.7"
+    align="center"
+    color="#FF1493">
+  </a-text>
 
-  </a-scene>
+</a-scene>
+
 </body>
 </html>
