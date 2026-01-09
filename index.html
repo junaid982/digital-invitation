@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Markerless 3D Love AR</title>
+  <title>3D Couple Markerless AR</title>
 
+  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
   <style>
@@ -21,7 +22,7 @@
 
 <body>
 
-<div id="hint">📱 Move phone → Tap on floor to place AR card</div>
+<div id="hint">📱 Move phone → Tap on floor to place AR couple</div>
 
 <a-scene
   renderer="logarithmicDepthBuffer: true;"
@@ -32,62 +33,54 @@
   <!-- Camera -->
   <a-camera></a-camera>
 
-  <!-- Light -->
-  <a-entity light="type: ambient; intensity: 1.2"></a-entity>
-  <a-entity light="type: directional; intensity: 0.8" position="1 2 1"></a-entity>
-
-  <!-- Hit test cursor -->
-  <a-entity
-    id="cursor"
-    raycaster="objects: .hit"
-    cursor="fuse: false">
-  </a-entity>
+  <!-- Lights -->
+  <a-entity light="type: ambient; intensity: 1.3"></a-entity>
+  <a-entity light="type: directional; intensity: 1" position="1 3 2"></a-entity>
 
   <!-- ================= AR CONTENT ================= -->
   <a-entity id="arContent" visible="false">
 
-    <!-- FLOATING GROUP -->
+    <!-- Floating animation -->
     <a-entity
-      animation="property: position; dir: alternate; dur: 3000; easing: easeInOutSine; loop: true; to: 0 0.1 0">
+      animation="property: position; dir: alternate; dur: 3000; easing: easeInOutSine; loop: true; to: 0 0.12 0">
 
-      <!-- COUPLE IMAGE (POP-OUT) -->
-      <a-plane
-        src="junaid_shaziya.png"
-        position="0 1.8 0"
-        width="1.3"
-        height="1.5"
-        material="shader: flat; transparent: true;"
-        animation="property: scale; from: 1 1 1; to: 1.05 1.05 1.05; dir: alternate; dur: 2500; loop: true">
-      </a-plane>
+      <!-- ================= 3D COUPLE MODEL ================= -->
+      <a-entity
+        gltf-model="human couple 3d model.glb"
+        position="0 0 0"
+        rotation="0 180 0"
+        scale="0.6 0.6 0.6"
+        animation="property: rotation; to: 0 360 0; dur: 25000; loop: true">
+      </a-entity>
 
-      <!-- 3D HEART -->
+      <!-- ================= 3D HEARTS ================= -->
       <a-sphere
-        position="-0.9 1.6 0.1"
+        position="-0.8 1.4 0.3"
         radius="0.08"
         color="#FF4D6D"
         animation="property: rotation; to: 0 360 0; dur: 4000; loop: true">
       </a-sphere>
 
       <a-sphere
-        position="0.9 1.6 0.1"
+        position="0.8 1.4 0.3"
         radius="0.08"
         color="#FF4D6D"
         animation="property: rotation; to: 0 -360 0; dur: 4000; loop: true">
       </a-sphere>
 
-      <!-- 3D RING -->
+      <!-- ================= 3D RING ================= -->
       <a-torus
-        position="0 0.4 0.2"
+        position="0 0.25 0.4"
         radius="0.18"
         radius-tubular="0.015"
         color="#FFD700"
         animation="property: rotation; to: 360 360 0; dur: 6000; loop: true">
       </a-torus>
 
-      <!-- TEXT -->
+      <!-- ================= TEXT ================= -->
       <a-text
         value="Junaid & Shaziya"
-        position="0 1.1 0.1"
+        position="0 1.9 0.2"
         align="center"
         color="#FF4D6D"
         scale="0.8 0.8 0.8">
@@ -95,7 +88,7 @@
 
       <a-text
         value="Tum meri har dua ka woh hissa ho"
-        position="0 0.8 0.15"
+        position="0 1.6 0.25"
         align="center"
         color="#FFFFFF"
         scale="0.55 0.55 0.55">
@@ -103,7 +96,7 @@
 
       <a-text
         value="Haath thaam kar chalna hai umr bhar"
-        position="0 0.55 0.2"
+        position="0 1.35 0.3"
         align="center"
         color="#FFFFFF"
         scale="0.55 0.55 0.55">
@@ -111,7 +104,7 @@
 
       <a-text
         value="Forever Together"
-        position="0 0.25 0.25"
+        position="0 1.1 0.35"
         align="center"
         color="#FFD1DC"
         scale="0.6 0.6 0.6">
@@ -120,7 +113,7 @@
     </a-entity>
   </a-entity>
 
-  <!-- Tap Surface -->
+  <!-- Invisible surface for tap placement -->
   <a-plane
     class="hit"
     position="0 0 0"
@@ -143,8 +136,9 @@
   scene.addEventListener("click", () => {
     if (!content.visible) {
       content.visible = true;
-      music.play().catch(()=>{});
-      document.getElementById("hint").innerText = "❤️ Move around to feel depth";
+      music.play().catch(() => {});
+      document.getElementById("hint").innerText =
+        "❤️ Walk around to feel real 3D depth";
     }
   });
 </script>
