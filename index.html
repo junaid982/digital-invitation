@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wedding Invitation</title>
+  <title>Wedding Invitation AR</title>
 
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -20,10 +20,10 @@
 <body>
 
 <!-- ===================== ADJUST HERE ===================== -->
-
 <script>
-  /* DISTANCE FROM CAMERA (Z axis) */
-  const IMAGE_Z = -4.5;     // More far → -4 , closer → -3
+  /* Z VALUE (DISTANCE FROM CAMERA) */
+  /* More negative = farther away */
+  const IMAGE_Z = -4.5;
   const TEXT_Z  = -4.5;
 
   /* IMAGE SIZE */
@@ -31,13 +31,9 @@
   const IMAGE_HEIGHT = 1.4;
 
   /* TEXT SIZE */
-  const TEXT_SCALE = 0.7;
-
-  /* TEXT POSITION */
-  const TEXT_Y = 1.2;   // Up / down
-  const TEXT_X = 0;     // Left / right
+  const NAME_SCALE   = 0.9;
+  const OTHER_SCALE  = 0.7;
 </script>
-
 <!-- ====================================================== -->
 
 <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
@@ -45,27 +41,58 @@
   <!-- Camera -->
   <a-camera></a-camera>
 
-  <!-- ================= IMAGE (PNG / JPG SAFE) ================= -->
-  <!-- a-plane is more stable than a-image in WebAR -->
+  <!-- ================= IMAGE ================= -->
   <a-plane
     src="couple.png"
-    position="0 2.1 -3.5"
+    position="0 2.2 -4.5"
     width="1.4"
     height="1.4"
     material="shader: flat; transparent: true; depthWrite: false;">
   </a-plane>
 
-  <!-- ================= WEDDING TEXT ================= -->
+  <!-- ================= NAMES ================= -->
   <a-text
-    value="💍 Junaid Ansari Weds ❤️ Shaziya Khan 
-📅 15 Feb 2026
-📍 Wedding Hall, Nont Know
-📞 Groom: 9999999999
-📞 Bride: 8888888888"
-    position="0 0.2 -3.5"
-    scale="0.7 0.7 0.7"
+    value="💍 Junaid Ansari Weds ❤️ Shaziya Khan"
+    position="0 1.45 -4.5"
+    scale="0.9 0.9 0.9"
     align="center"
     color="#FF1493">
+  </a-text>
+
+  <!-- ================= DATE ================= -->
+  <a-text
+    value="📅 15 Feb 2026"
+    position="0 1.20 -4.5"
+    scale="0.7 0.7 0.7"
+    align="center"
+    color="#FFFFFF">
+  </a-text>
+
+  <!-- ================= VENUE ================= -->
+  <a-text
+    value="📍 Wedding Hall, Not Known"
+    position="0 1.00 -4.5"
+    scale="0.7 0.7 0.7"
+    align="center"
+    color="#FFFFFF">
+  </a-text>
+
+  <!-- ================= GROOM PHONE ================= -->
+  <a-text
+    value="📞 Groom: 9999999999"
+    position="0 0.80 -4.5"
+    scale="0.65 0.65 0.65"
+    align="center"
+    color="#FFFFFF">
+  </a-text>
+
+  <!-- ================= BRIDE PHONE ================= -->
+  <a-text
+    value="📞 Bride: 8888888888"
+    position="0 0.65 -4.5"
+    scale="0.65 0.65 0.65"
+    align="center"
+    color="#FFFFFF">
   </a-text>
 
 </a-scene>
