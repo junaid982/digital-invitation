@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>3D Couple AR</title>
+  <title>Love AR Card</title>
 
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -10,119 +10,134 @@
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
   <style>
-    body { margin: 0; overflow: hidden; }
-    #hint {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      color: white;
-      font-family: sans-serif;
-      z-index: 10;
-      background: rgba(0,0,0,0.4);
-      padding: 10px;
+    body {
+      margin: 0;
+      overflow: hidden;
     }
   </style>
 </head>
 
 <body>
 
-<div id="hint">📱 Loading model… please wait</div>
+<!-- ===================== CONTROLS ===================== -->
+<script>
+  const IMAGE_Z = -3.5;
+  const TEXT_Z  = -5.5;
 
-<a-scene
-  embedded
-  arjs="sourceType: webcam; debugUIEnabled: false;"
-  renderer="logarithmicDepthBuffer: true; precision: medium;"
->
+  const IMAGE_WIDTH  = 1.3;
+  const IMAGE_HEIGHT = 1.5;
 
-  <!-- ================= ASSETS ================= -->
-  <a-assets>
-    <a-asset-item id="coupleModel" src="human_couple.glb"></a-asset-item>
-    <audio id="bgMusic" src="music.mp3"></audio>
-  </a-assets>
+  const NAME_SCALE    = 0.8;
+  const SHAYARI_SCALE = 0.55;
+  const FOOTER_SCALE  = 0.6;
 
-  <!-- Camera -->
-  <a-camera position="0 0 0"></a-camera>
+  window.addEventListener("DOMContentLoaded", () => {
 
-  <!-- Lights -->
-  <a-entity light="type: ambient; intensity: 1.6"></a-entity>
-  <a-entity light="type: directional; intensity: 1.2" position="1 3 2"></a-entity>
+    document.querySelector("#coupleImage").setAttribute(
+      "position", `0 2.2 ${IMAGE_Z}`
+    );
+    document.querySelector("#coupleImage").setAttribute("width", IMAGE_WIDTH);
+    document.querySelector("#coupleImage").setAttribute("height", IMAGE_HEIGHT);
 
-  <!-- ================= AR CONTENT ================= -->
-  <a-entity
-    id="arContent"
-    visible="false"
-    position="0 -0.5 -2.8">
+    document.querySelector("#nameText").setAttribute(
+      "position", `0 1.55 ${TEXT_Z}`
+    );
+    document.querySelector("#nameText").setAttribute(
+      "scale", `${NAME_SCALE} ${NAME_SCALE} ${NAME_SCALE}`
+    );
 
-    <!-- Floating animation -->
-    <a-entity
-      animation="property: position; dir: alternate; dur: 3500; easing: easeInOutSine; loop: true; to: 0 -0.35 -2.8">
+    document.querySelectorAll(".shayariGroup").forEach((el, i) => {
+      el.setAttribute("position", `0 ${1.25 - i * 0.20} ${TEXT_Z}`);
+    });
 
-      <!-- ===== 3D COUPLE MODEL ===== -->
-      <a-entity
-        id="couple"
-        gltf-model="human_character_3d_model.glb"
-        position="0 0 0"
-        rotation="0 180 0"
-        scale="0.35 0.35 0.35">
-      </a-entity>
+    document.querySelectorAll(".footerText").forEach((el, i) => {
+      el.setAttribute("position", `0 ${0.55 - i * 0.15} ${TEXT_Z}`);
+      el.setAttribute(
+        "scale", `${FOOTER_SCALE} ${FOOTER_SCALE} ${FOOTER_SCALE}`
+      );
+    });
 
-      <!-- ===== RING ===== -->
-      <a-torus
-        position="0 0.3 0.5"
-        radius="0.18"
-        radius-tubular="0.015"
-        color="#FFD700"
-        animation="property: rotation; to: 360 360 0; dur: 6000; loop: true">
-      </a-torus>
+  });
+</script>
+<!-- ==================================================== -->
 
-      <!-- ===== TEXT ===== -->
-      <a-text
-        value="Junaid & Shaziya"
-        position="0 1.6 0.3"
-        align="center"
-        color="#FF4D6D"
-        scale="0.8 0.8 0.8">
-      </a-text>
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+  <a-camera></a-camera>
 
-      <a-text
-        value="Tum meri har dua ka woh hissa ho"
-        position="0 1.3 0.35"
-        align="center"
-        color="#FFFFFF"
-        scale="0.55 0.55 0.55">
-      </a-text>
+  <!-- ================= COUPLE IMAGE ================= -->
+  <a-plane
+    id="coupleImage"
+    src="junaid_shaziya.png"
+    material="shader: flat; transparent: true; depthWrite: false;">
+  </a-plane>
 
-      <a-text
-        value="Haath thaam kar chalna hai umr bhar"
-        position="0 1.05 0.4"
-        align="center"
-        color="#FFFFFF"
-        scale="0.55 0.55 0.55">
-      </a-text>
-
-    </a-entity>
+  <!-- ================= NAMES ================= -->
+  <a-entity>
+    <a-image src="static/heart.png" position="-1.1 1.55 -6.5" scale="0.25 0.25 0.25"></a-image>
+    <a-text
+      id="nameText"
+      value="Junaid & Shaziya"
+      align="center"
+      color="#FF4D6D">
+    </a-text>
+    <a-image src="static/heart.png" position="1.1 1.55 -6.5" scale="0.25 0.25 0.25"></a-image>
   </a-entity>
+
+  <!-- ================= SHAYARI LINE 1 ================= -->
+  <a-entity class="shayariGroup">
+    <a-image src="static/star.png" position="-1 0 0" scale="0.18 0.18 0.18"></a-image>
+    <a-text
+      value="Tum meri har dua ka woh hissa ho"
+      align="center"
+      color="#FFFFFF"
+      scale="0.55 0.55 0.55">
+    </a-text>
+    <a-image src="static/star.png" position="1 0 0" scale="0.18 0.18 0.18"></a-image>
+  </a-entity>
+
+  <!-- ================= SHAYARI LINE 2 ================= -->
+  <a-entity class="shayariGroup">
+    <a-image src="static/heart.png" position="-1 0 0" scale="0.18 0.18 0.18"></a-image>
+    <a-text
+      value="Jiske bina meri zindagi adhoori ho"
+      align="center"
+      color="#FFFFFF"
+      scale="0.55 0.55 0.55">
+    </a-text>
+    <a-image src="static/heart.png" position="1 0 0" scale="0.18 0.18 0.18"></a-image>
+  </a-entity>
+
+  <!-- ================= SHAYARI LINE 3 ================= -->
+  <a-entity class="shayariGroup">
+    <a-image src="static/red-rose.png" position="-1.1 0 0" scale="0.18 0.18 0.18"></a-image>
+    <a-text
+      value="Haath thaam kar chalna hai umr bhar"
+      align="center"
+      color="#FFFFFF"
+      scale="0.55 0.55 0.55">
+    </a-text>
+    <a-image src="static/red-rose.png" position="1.1 0 0" scale="0.18 0.18 0.18"></a-image>
+  </a-entity>
+
+  <!-- ================= FOOTER ================= -->
+  <a-text
+    class="footerText"
+    value="Forever Together"
+    align="center"
+    color="#FFD1DC">
+  </a-text>
+
+  <a-text
+    class="footerText"
+    value="With Love"
+    align="center"
+    color="#FFD1DC">
+  </a-text>
 
 </a-scene>
 
-<script>
-  const content = document.getElementById("arContent");
-  const hint = document.getElementById("hint");
-  const music = document.getElementById("bgMusic");
-
-  document.querySelector("a-scene").addEventListener("loaded", () => {
-    hint.innerText = "📱 Tap anywhere to place the couple ❤️";
-  });
-
-  document.body.addEventListener("click", () => {
-    if (!content.visible) {
-      content.visible = true;
-      music.play().catch(() => {});
-      hint.innerText = "❤️ Walk around — Real 3D depth";
-    }
-  });
-</script>
-
 </body>
 </html>
+
+
+
