@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wedding Invitation AR</title>
+  <title>Love AR Card</title>
 
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -19,81 +19,119 @@
 
 <body>
 
-<!-- ===================== ADJUST HERE ===================== -->
+<!-- ===================== CONTROLS ===================== -->
 <script>
-  /* Z VALUE (DISTANCE FROM CAMERA) */
-  /* More negative = farther away */
-  const IMAGE_Z = -4.5;
-  const TEXT_Z  = -4.5;
+  const IMAGE_Z = -3.5;
+  const TEXT_Z  = -5.5;
 
-  /* IMAGE SIZE */
-  const IMAGE_WIDTH  = 1.4;
-  const IMAGE_HEIGHT = 1.4;
+  const IMAGE_WIDTH  = 1.3;
+  const IMAGE_HEIGHT = 1.5;
 
-  /* TEXT SIZE */
-  const NAME_SCALE   = 0.9;
-  const OTHER_SCALE  = 0.7;
+  const NAME_SCALE    = 0.8;
+  const SHAYARI_SCALE = 0.55;
+  const FOOTER_SCALE  = 0.6;
+
+  window.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelector("#coupleImage").setAttribute(
+      "position", `0 2.2 ${IMAGE_Z}`
+    );
+    document.querySelector("#coupleImage").setAttribute("width", IMAGE_WIDTH);
+    document.querySelector("#coupleImage").setAttribute("height", IMAGE_HEIGHT);
+
+    document.querySelector("#nameText").setAttribute(
+      "position", `0 1.55 ${TEXT_Z}`
+    );
+    document.querySelector("#nameText").setAttribute(
+      "scale", `${NAME_SCALE} ${NAME_SCALE} ${NAME_SCALE}`
+    );
+
+    document.querySelectorAll(".shayariGroup").forEach((el, i) => {
+      el.setAttribute("position", `0 ${1.25 - i * 0.20} ${TEXT_Z}`);
+    });
+
+    document.querySelectorAll(".footerText").forEach((el, i) => {
+      el.setAttribute("position", `0 ${0.55 - i * 0.15} ${TEXT_Z}`);
+      el.setAttribute(
+        "scale", `${FOOTER_SCALE} ${FOOTER_SCALE} ${FOOTER_SCALE}`
+      );
+    });
+
+  });
 </script>
-<!-- ====================================================== -->
+<!-- ==================================================== -->
 
 <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-
-  <!-- Camera -->
   <a-camera></a-camera>
 
-  <!-- ================= IMAGE ================= -->
+  <!-- ================= COUPLE IMAGE ================= -->
   <a-plane
-
-    src="couple-removebg-preview.png"
-    position="0 2.2 -4.5"
-    width="1.4"
-    height="1.4"
+    id="coupleImage"
+    src="junaid_shaziya.png"
     material="shader: flat; transparent: true; depthWrite: false;">
   </a-plane>
 
   <!-- ================= NAMES ================= -->
+  <a-entity>
+    <a-image src="static/heart.png" position="-1.1 1.55 -6.5" scale="0.25 0.25 0.25"></a-image>
+    <a-text
+      id="nameText"
+      value="Junaid & Shaziya"
+      align="center"
+      color="#FF4D6D">
+    </a-text>
+    <a-image src="static/heart.png" position="1.1 1.55 -6.5" scale="0.25 0.25 0.25"></a-image>
+  </a-entity>
+
+  <!-- ================= SHAYARI LINE 1 ================= -->
+  <a-entity class="shayariGroup">
+    <a-image src="static/star.png" position="-1 0 0" scale="0.18 0.18 0.18"></a-image>
+    <a-text
+      value="Tum meri har dua ka woh hissa ho"
+      align="center"
+      color="#FFFFFF"
+      scale="0.55 0.55 0.55">
+    </a-text>
+    <a-image src="static/star.png" position="1 0 0" scale="0.18 0.18 0.18"></a-image>
+  </a-entity>
+
+  <!-- ================= SHAYARI LINE 2 ================= -->
+  <a-entity class="shayariGroup">
+    <a-image src="static/heart.png" position="-1 0 0" scale="0.18 0.18 0.18"></a-image>
+    <a-text
+      value="Jiske bina meri zindagi adhoori ho"
+      align="center"
+      color="#FFFFFF"
+      scale="0.55 0.55 0.55">
+    </a-text>
+    <a-image src="static/heart.png" position="1 0 0" scale="0.18 0.18 0.18"></a-image>
+  </a-entity>
+
+  <!-- ================= SHAYARI LINE 3 ================= -->
+  <a-entity class="shayariGroup">
+    <a-image src="static/red-rose.png" position="-1.1 0 0" scale="0.18 0.18 0.18"></a-image>
+    <a-text
+      value="Haath thaam kar chalna hai umr bhar"
+      align="center"
+      color="#FFFFFF"
+      scale="0.55 0.55 0.55">
+    </a-text>
+    <a-image src="static/red-rose.png" position="1.1 0 0" scale="0.18 0.18 0.18"></a-image>
+  </a-entity>
+
+  <!-- ================= FOOTER ================= -->
   <a-text
-    value="💍 Junaid Ansari Weds ❤️ Shaziya Khan"
-    position="0 1.45 -4.5"
-    scale="0.9 0.9 0.9"
+    class="footerText"
+    value="Forever Together"
     align="center"
-    color="#FF1493">
+    color="#FFD1DC">
   </a-text>
 
-  <!-- ================= DATE ================= -->
   <a-text
-    value="📅 15 Feb 2026"
-    position="0 1.20 -4.5"
-    scale="0.7 0.7 0.7"
+    class="footerText"
+    value="With Love"
     align="center"
-    color="#FFFFFF">
-  </a-text>
-
-  <!-- ================= VENUE ================= -->
-  <a-text
-    value="📍 Wedding Hall, Not Known"
-    position="0 1.00 -4.5"
-    scale="0.7 0.7 0.7"
-    align="center"
-    color="#FFFFFF">
-  </a-text>
-
-  <!-- ================= GROOM PHONE ================= -->
-  <a-text
-    value="📞 Groom: 9999999999"
-    position="0 0.80 -4.5"
-    scale="0.65 0.65 0.65"
-    align="center"
-    color="#FFFFFF">
-  </a-text>
-
-  <!-- ================= BRIDE PHONE ================= -->
-  <a-text
-    value="📞 Bride: 8888888888"
-    position="0 0.65 -4.5"
-    scale="0.65 0.65 0.65"
-    align="center"
-    color="#FFFFFF">
+    color="#FFD1DC">
   </a-text>
 
 </a-scene>
